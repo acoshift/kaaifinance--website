@@ -29,6 +29,8 @@
 			<UploadForm />
 		{/if}
 	{:else}
-		<div>Connecting to Ethereum...</div>
+		<div class="_bgcl-white-100 _bdw-1px _bdcl-neutral-300 _bdrd-12px _pd-32px _fw-500 _fs-600 _mgt-32px">
+			Connecting to Ethereum...
+		</div>
 	{/if}
 </div>
