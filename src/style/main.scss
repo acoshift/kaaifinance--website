@@ -4,3 +4,10 @@
 @import '@nomimono/nomimono-css/component.css';
 
 @import '@nomimono/nomimono-theme/default.css';
+
+.bg-pattern {
+    background-color: var(--color-neutral-50);
+    opacity: 0.8;
+    background-size: 10px 10px;
+    background-image: repeating-linear-gradient(45deg, var(--color-primary-100) 0, var(--color-primary-100) 1px, var(--color-neutral-50) 0, var(--color-neutral-50) 50%);
+}
