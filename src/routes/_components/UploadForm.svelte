@@ -77,25 +77,50 @@
 		}
 		reader.readAsDataURL(f)
 	}
+
+	let inputFileName = null
+	function setFileName (e) {
+		const f = e.target.files[0]
+		inputFileName = f.name
+	}
 </script>
 
-<form class="lo-12 _gg-16px _mgt-32px _bgcl-white-100 _pd-24px _bdrd-12px _bdw-1px _bdcl-neutral-200" on:submit|preventDefault={upload}>
+<form class="lo-12 _gg-24px _mgt-32px _bgcl-white-100 _pd-24px _bdrd-12px _bdw-1px _bdcl-neutral-200 _w-100pct" on:submit|preventDefault={upload}>
 	<div>
-		<label for="input-file">File</label>
-		<input type="file" id="input-file" bind:this={form.file} required>
+		<label for="input-file">
+			<div class="nomi-button is-variant-secondary">
+				Upload file
+			</div>
+		</label>
+		<input class="_dp-n" type="file" id="input-file" bind:this={form.file} required on:change={setFileName}>
+		{#if inputFileName}
+			<div class="_fs-300 _bgcl-neutral-100 _pdv-4px _pdh-8px _mgt-4px">{inputFileName}</div>
+		{/if}
 	</div>
+
 	<div>
-		<label for="input-thumbnail">Thumbnail</label>
-		<input type="file" id="input-thumbnail" bind:this={form.thumbnail} accept="image/png,image/jpeg" on:change={previewThumbnail} required>
+		<label for="input-thumbnail">
+			<div class="nomi-button is-variant-secondary">
+				Upload thumbnail
+			</div>
+		</label>
+		<input class="_dp-n" type="file" id="input-thumbnail" bind:this={form.thumbnail} accept="image/png,image/jpeg" on:change={previewThumbnail} required>
+
+		{#if thumbnailImage}
+			<div class="_dp-f _mxw-100pct _mgt-4px">
+				<div class="_bgcl-neutral-100 _pd-4px _bdrd-4px">
+					<img src={thumbnailImage} alt="thumbnail preview" class="_h-64px _mxw-100pct _ojf-ct">
+				</div>
+			</div>
+		{/if}
 	</div>
-	{#if thumbnailImage}
-		<div>
-			<img class="_w-100vh" src={thumbnailImage} alt="thumbnail preview">
-		</div>
-	{/if}
-	<div>
+
+	<div class="nomi-field">
 		<label for="input-price">Price</label>
-		<input id="input-price" bind:value={form.price} required>
+		<div class="nomi-input">
+			<input id="input-price" bind:value={form.price} placeholder="0" required>
+		</div>
 	</div>
+
 	<button class="nomi-button" class:is-loading={loading} disabled={loading}>Upload</button>
 </form>

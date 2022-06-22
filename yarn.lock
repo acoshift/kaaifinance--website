@@ -532,17 +532,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nomimono/nomimono-css@npm:^0.0.3":
-  version: 0.0.3
-  resolution: "@nomimono/nomimono-css@npm:0.0.3"
-  checksum: 47faef1d84390ae1ae5656178464031f626446a8c5a6e4658844baa316013878588b3ffe93127c7434d50749125e802d6432c4500aa7056149589ed0d942b1fb
+"@nomimono/nomimono-css@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "@nomimono/nomimono-css@npm:0.2.1"
+  checksum: 7b0bd87e683b12d8b9d9e085de2af8c54d5b09a05ad9cff2d49932e5207574d3fe75c7b790e1ee8a00724b1cb513f4ff6945acea113335f243d079360015e280
   languageName: node
   linkType: hard
 
-"@nomimono/nomimono-theme@npm:^0.0.3":
-  version: 0.0.3
-  resolution: "@nomimono/nomimono-theme@npm:0.0.3"
-  checksum: 8b519b6ac02f0244a7c79303be050a23778ca1c6bdb65ab9a3fd842909b43fe7ba2f182c8630532eacac7cf317149d100354b69ab02f622fe57ada5400e02dd2
+"@nomimono/nomimono-theme@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "@nomimono/nomimono-theme@npm:0.2.0"
+  checksum: d64cb03309a308c6b8e7c843842dd9c8802bf7190057c3afa13ab01cfb8a41f83a1a2b0926ca6fe999372557a1ee9e6ad952fe396e9fae165144a10921136d94
   languageName: node
   linkType: hard
 
@@ -2207,8 +2207,8 @@ __metadata:
   resolution: "kaaifinance--website@workspace:."
   dependencies:
     "@metamask/detect-provider": ^1.2.0
-    "@nomimono/nomimono-css": ^0.0.3
-    "@nomimono/nomimono-theme": ^0.0.3
+    "@nomimono/nomimono-css": ^0.2.1
+    "@nomimono/nomimono-theme": ^0.2.0
     "@sveltejs/adapter-auto": next
     "@sveltejs/adapter-cloudflare": ^1.0.0-next.23
     "@sveltejs/kit": next
