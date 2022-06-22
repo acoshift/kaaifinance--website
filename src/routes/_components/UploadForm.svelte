@@ -85,7 +85,7 @@
 	}
 </script>
 
-<form class="lo-12 _gg-24px _mgt-32px _bgcl-white-100 _pd-24px _bdrd-12px _bdw-1px _bdcl-neutral-200 _w-100pct" on:submit|preventDefault={upload}>
+<form class="lo-12 _gg-24px _bgcl-white-100 _pd-24px _bdrd-12px _bdw-1px _bdcl-neutral-200 _w-100pct" on:submit|preventDefault={upload}>
 	<div>
 		<label for="input-file">
 			<div class="nomi-button is-variant-secondary">
