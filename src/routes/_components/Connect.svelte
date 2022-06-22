@@ -11,4 +11,4 @@
 	}
 </script>
 
-<div class="nomi-button" on:click={connect}>Connect Wallet</div>
+<div class="nomi-button is-size-large _mgt-32px" on:click={connect}>Connect Wallet</div>
