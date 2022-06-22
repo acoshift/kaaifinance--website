@@ -1,4 +1,4 @@
-const endpoint = 'https://kaaifinance--api.moonrhythm.workers.dev'
+export const endpoint = 'https://kaaifinance--api.moonrhythm.workers.dev'
 
 export async function price ({ sender, maxSize }) {
 	const resp = await fetch(`${endpoint}/price`, {

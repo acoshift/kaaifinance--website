@@ -8,6 +8,7 @@ export const account = writable('')
 export const balance = writable(BigNumber.from(0))
 const rpcUrl = 'https://rei-rpc.moonrhythm.io'
 const contractAddress = '0x11B6a7Fd205AB1a701Ee1d5564cDfA8dD152d47f'
+export const emptyAddress = '0x0000000000000000000000000000000000000000'
 
 let ethereum
 let provider = new ethers.providers.JsonRpcProvider(rpcUrl)
@@ -165,4 +166,40 @@ export async function signData (method) {
 		signature,
 		deadline
 	}
+}
+
+async function ethCallWithoutProvider(callData) {
+	const resp = await fetch(rpcUrl, {
+		method: 'POST',
+		headers: {
+			'content-type': 'application/json'
+		},
+		body: JSON.stringify({
+			id: '1',
+			method: 'eth_call',
+			params: [
+				{ to: contractAddress, data: callData },
+				'latest'
+			]
+		})
+	})
+	return (await resp.json()).result
+}
+
+export async function getFileMetaWithoutProvider (id) {
+	const packedId = ethers.utils.solidityPack(['uint256'], [id])
+	const callData = ethers.utils.hexConcat(['0xf4c714b4', packedId])
+	const result = await ethCallWithoutProvider(callData)
+
+	return ethers.utils.defaultAbiCoder.decode(
+		[
+			'address sender',
+			'uint256 maxSize',
+			'uint256 uploadFee',
+			'uint256 downloadFee',
+			'bool active',
+			'uint256 paidCount'
+		],
+		result
+	)
 }
