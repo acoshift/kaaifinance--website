@@ -11,7 +11,7 @@
 	}
 </script>
 
-<div class="_w-100pct _mgt-64px">
+<div class="_w-100pct _mnh-100vh _pdtv-64px _bgcl-neutral-100">
 	<div class="_dp-f _jtfct-ct">
 		<slot />
 	</div>

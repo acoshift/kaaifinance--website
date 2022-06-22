@@ -42,7 +42,7 @@
 	}
 </script>
 
-<form class="_mgt-32px" on:submit|preventDefault={upload}>
+<form class="lo-12 _gg-16px _mgt-32px _bgcl-white-100 _pd-24px _bdrd-12px _bdw-1px _bdcl-neutral-200" on:submit|preventDefault={upload}>
 	<div>
 		<label for="input-file">File</label>
 		<input type="file" id="input-file" bind:this={form.file} required>
