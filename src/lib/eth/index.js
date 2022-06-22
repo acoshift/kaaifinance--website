@@ -1,11 +1,13 @@
 import detectEthereumProvider from '@metamask/detect-provider'
 import { writable } from 'svelte/store'
 import { BigNumber, ethers } from 'ethers'
+import abi from './abi.json'
 
 export const hasProvider = writable(null)
 export const account = writable('')
 export const balance = writable(BigNumber.from(0))
 const rpcUrl = 'https://rei-rpc.moonrhythm.io'
+const contractAddress = '0x11B6a7Fd205AB1a701Ee1d5564cDfA8dD152d47f'
 
 let ethereum
 let provider = new ethers.providers.JsonRpcProvider(rpcUrl)
@@ -112,4 +114,55 @@ export async function reloadBalance () {
 export function formatEther (wei) {
 	const v = ethers.utils.formatEther(wei)
 	return ethers.utils.commify(v)
+}
+
+function getSigner () {
+	return provider.getSigner()
+}
+
+export async function newFile ({ maxSize, downloadFee, deadline, signature, fee }) {
+	const c = new ethers.Contract(contractAddress, abi, provider)
+	const tx = await c
+		.connect(getSigner())
+		.newFile(maxSize, downloadFee, deadline, signature,
+			{ value: fee })
+	return tx.wait()
+}
+
+export async function signData (method) {
+	const deadline = Math.floor(Date.now() / 1000) + 300
+	const data = {
+		primaryType: 'Request',
+		types: {
+			EIP712Domain: [
+				{ name: 'name', type: 'string' },
+				{ name: 'version', type: 'string' },
+				{ name: 'chainId', type: 'uint256' }
+			],
+			Request: [
+				{ name: 'method', type: 'string' },
+				{ name: 'deadline', type: 'uint256' }
+			]
+		},
+		domain: {
+			name: 'kaai.finance',
+			version: '1',
+			chainId: `0x${operationChainId.toString(16)}`
+		},
+		message: {
+			method,
+			deadline
+		}
+	}
+
+	const signature = await ethereum.request({
+		method: 'eth_signTypedData_v4',
+		params: [_account, JSON.stringify(data)],
+		from: _account
+	})
+
+	return {
+		signature,
+		deadline
+	}
 }

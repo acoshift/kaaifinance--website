@@ -2,12 +2,16 @@
 	import { account } from '$lib/eth'
 	import * as modal from '$lib/modal'
 	import * as api from '$lib/api'
+	import * as eth from '$lib/eth'
+	import { BigNumber, ethers } from 'ethers'
+	import { goto } from '$app/navigation'
 
 	const form = {
 		file: null,
 		thumbnail: null,
 		price: '1'
 	}
+	let receiptId = null
 
 	let loading = false
 	async function upload () {
@@ -18,14 +22,47 @@
 		loading = true
 		try {
 			const f = form.file.files[0]
-			const result = await api.price({
-				sender: $account,
-				maxSize: f.size
-			})
-			console.log(result)
-			modal.success('Upload Success', 'File uploaded successfully')
-		} catch (e) {
+			const thumbnail = form.thumbnail.files[0]
+			const price = ethers.utils.parseEther(form.price)
 
+			if (!receiptId) {
+				// quote
+				const quoteResult = await api.price({
+					sender: $account,
+					maxSize: f.size
+				})
+
+				// pay
+				const payReceipt = await eth.newFile({
+					maxSize: BigNumber.from(f.size),
+					downloadFee: price,
+					deadline: BigNumber.from(quoteResult.deadline),
+					signature: quoteResult.signature,
+					fee: BigNumber.from(quoteResult.fee)
+				})
+				console.log(payReceipt)
+				receiptId = payReceipt.events
+					.find((ev) => ev.eventSignature === 'NewFile(address,uint256)')
+					.args.id
+			}
+
+			const signed = await eth.signData('upload')
+
+			// upload
+			const uploadResult = await api.upload({
+				id: receiptId,
+				deadline: signed.deadline,
+				signature: signed.signature,
+				file: f,
+				thumbnail
+			})
+			if (uploadResult.status !== 200) {
+				throw new Error('calling upload api failed')
+			}
+			await modal.success('Upload Success', 'File uploaded successfully')
+			await goto(`/file/${receiptId}`)
+		} catch (e) {
+			modal.error('Upload Failed', e.reason || e.message)
 		} finally {
 			loading = false
 		}

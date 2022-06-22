@@ -1,7 +1,7 @@
 const endpoint = 'https://kaaifinance--api.moonrhythm.workers.dev'
 
-export function price ({ sender, maxSize }) {
-	return fetch(`${endpoint}/price`, {
+export async function price ({ sender, maxSize }) {
+	const resp = await fetch(`${endpoint}/price`, {
 		method: 'POST',
 		headers: {
 			'content-type': 'application/json'
@@ -10,5 +10,20 @@ export function price ({ sender, maxSize }) {
 			sender,
 			maxSize
 		})
+	})
+	return resp.json()
+}
+
+export function upload ({ id, deadline, signature, file, thumbnail }) {
+	const fd = new FormData()
+	fd.set('id', id)
+	fd.set('deadline', deadline)
+	fd.set('signature', signature)
+	fd.set('file', file)
+	fd.set('thumbnail', thumbnail)
+
+	return fetch(`${endpoint}/upload`, {
+		method: 'POST',
+		body: fd
 	})
 }
