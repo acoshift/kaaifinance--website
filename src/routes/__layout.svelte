@@ -27,7 +27,7 @@
 			</g>
 		</svg>
 	</div>
-	<div class="_dp-f _jtfct-ct _pdt-48px">
+	<div class="_dp-f _jtfct-ct _pdv-48px">
 		<slot />
 	</div>
 </div>
