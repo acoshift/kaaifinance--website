@@ -19,6 +19,7 @@
 <script>
 	import * as api from '$lib/api'
 	import * as modal from '$lib/modal'
+	import Connect from '../_components/Connect.svelte'
 
 	export let id
 	export let file
@@ -84,11 +85,15 @@
 			{#if $account && !loading}
 				<div class="lo-12 _g-8px">
 					{#if !paid}
-						<button type="button" class="nomi-button" class:is-loading={paying} on:click={pay}>Pay</button>
+						<button type="button" class="nomi-button" class:is-loading={paying} on:click={pay}>Pay ({eth.formatEther(file.downloadFee)} REI)</button>
 					{:else}
 						<button type="button" class="nomi-button is-variant-secondary" on:click={download}>Download</button>
 					{/if}
 				</div>
+			{/if}
+
+			{#if !$account}
+				<Connect />
 			{/if}
 		</div>
 	{/if}
