@@ -54,17 +54,9 @@ export async function init () {
 	hasProvider.set(true)
 }
 
-function parseChainId (chainId) {
-	try {
-		return parseInt(chainId, 16)
-	} catch (e) {
-		return 0
-	}
-}
-
 async function getChainId () {
 	try {
-		return parseChainId(await ethereum.request('eth_chainId'))
+		return parseInt(await ethereum.request('eth_chainId'), 16)
 	} catch (e) {
 		return 0
 	}
@@ -77,7 +69,7 @@ export async function requestAccounts () {
 
 	const chainId = await getChainId()
 	if (chainId !== 55555) {
-		// try switch to chain 55555 or add new chain
+		// try switch to chain 55555 or add new chain to wallet
 		try {
 			await ethereum.request({
 				method: 'wallet_switchEthereumChain',
