@@ -25,6 +25,7 @@
 	export let file
 
 	const account = eth.account
+	const hasProvider = eth.hasProvider
 
 	$: empty = !file || file.sender === eth.emptyAddress
 	$: thumbnailLink = `${api.endpoint}/thumbnail?id=${id}`
@@ -92,8 +93,14 @@
 				</div>
 			{/if}
 
-			{#if !$account}
-				<Connect />
+			{#if $hasProvider != null}
+				{#if !$account}
+					<Connect />
+				{/if}
+			{:else}
+				<div>
+					Connecting to Ethereum...
+				</div>
 			{/if}
 		</div>
 	{/if}
