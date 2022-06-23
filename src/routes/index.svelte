@@ -8,7 +8,7 @@
 	const balance = eth.balance
 </script>
 
-<div class="lo-12 _gg-12px _jtfit-ct _w-100pct" style="max-width: 460px;">
+<div class="lo-12 _gg-12px _jtfit-ct _w-100pct" style="max-width: 480px;">
 	{#if $hasProvider != null}
 		{#if !$account}
 			<Connect />
