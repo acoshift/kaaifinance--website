@@ -6,7 +6,6 @@
 
 		// get file thumbnail
 		const file = await eth.getFileMetaWithoutProvider(id)
-		console.log(file)
 
 		return {
 			props: {
@@ -19,15 +18,44 @@
 
 <script>
 	import * as api from '$lib/api'
+	import * as modal from '$lib/modal'
 
 	export let id
 	export let file
 
+	const account = eth.account
+
 	$: empty = !file || file.sender === eth.emptyAddress
 	$: thumbnailLink = `${api.endpoint}/thumbnail?id=${id}`
 
-	async function pay () {
+	let loading = true
+	let paid = false
 
+	$: $account, fetchPaid()
+
+	async function fetchPaid () {
+		if (!$account) {
+			return
+		}
+		paid = await eth.isPaid(id)
+		loading = false
+	}
+
+	let paying = false
+	async function pay () {
+		if (paying) {
+			return
+		}
+
+		paying = true
+		try {
+			await eth.payFile(id, file.downloadFee)
+		} catch (e) {
+			modal.error('Pay Failed', e.reason || e.message)
+		} finally {
+			fetchPaid()
+			paying = false
+		}
 	}
 
 	async function download () {
@@ -51,10 +79,15 @@
 		<div class="lo-12 _gg-32px _bgcl-white-100 _pd-24px _bdrd-12px _bdw-1px _bdcl-neutral-300 _w-100pct">
 			<img src={thumbnailLink} alt="thumbnail" width="100%" class="_bdrd-8px _ovf-hd">
 
-			<div class="lo-12 _g-8px">
-				<button type="button" class="nomi-button" on:click={pay}>Pay</button>
-				<button type="button" class="nomi-button is-variant-secondary" on:click={download}>Download</button>
-			</div>
+			{#if $account && !loading}
+				<div class="lo-12 _g-8px">
+					{#if !paid}
+						<button type="button" class="nomi-button" class:is-loading={paying} on:click={pay}>Pay</button>
+					{:else}
+						<button type="button" class="nomi-button is-variant-secondary" on:click={download}>Download</button>
+					{/if}
+				</div>
+			{/if}
 		</div>
 	{/if}
 </div>

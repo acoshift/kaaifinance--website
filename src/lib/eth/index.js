@@ -130,6 +130,19 @@ export async function newFile ({ maxSize, downloadFee, deadline, signature, fee 
 	return tx.wait()
 }
 
+export async function payFile (id, fee) {
+	const c = new ethers.Contract(contractAddress, abi, provider)
+	const tx = await c
+		.connect(getSigner())
+		.payFile(id, { value: fee })
+	return tx.wait()
+}
+
+export function isPaid (id) {
+	const c = new ethers.Contract(contractAddress, abi, provider)
+	return c.paidFiles(id, _account)
+}
+
 export async function signData (method) {
 	const deadline = Math.floor(Date.now() / 1000) + 300
 	const data = {
