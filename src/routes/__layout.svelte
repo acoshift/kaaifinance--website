@@ -12,7 +12,7 @@
 </script>
 
 <div class="bg-pattern _w-100pct _mnh-100vh _pdtv-64px _bgcl-neutral-100 _pdh-16px">
-	<div class="_pst-f _l-12px _t-12px">
+	<a class="_pst-f _l-12px _t-12px" href="/">
 		<svg width="60" viewBox="0 0 210 182" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 			<title>Path</title>
 			<defs>
@@ -26,7 +26,7 @@
 				<path d="M120.50527,27.8125 L117.38027,43.4375 L184.526474,43.4375 L178.519263,155 L121.577954,155 L127.046704,69.0625 L113.110382,69.0625 L97.4853818,155 L40.4464364,155 L56.0714364,69.0625 L25.8125,69.0625 L25.8125,43.4375 L60.3072305,43.4375 L63.4322305,27.8125 L120.50527,27.8125 Z" id="Path" stroke="#FFFFFF" stroke-width="10" fill="url(#linearGradient-1)" fill-rule="nonzero"></path>
 			</g>
 		</svg>
-	</div>
+	</a>
 	<div class="_dp-f _jtfct-ct _pdv-48px">
 		<slot />
 	</div>

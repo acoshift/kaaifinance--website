@@ -59,7 +59,9 @@
 	}
 
 	async function download () {
-
+		const signed = await eth.signData('download')
+		const url = `${api.endpoint}/download?id=${id}&signature=${signed.signature}&deadline=${signed.deadline}`
+		window.open(url)
 	}
 </script>
 

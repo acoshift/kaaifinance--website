@@ -181,7 +181,7 @@ export async function signData (method) {
 	}
 }
 
-async function ethCallWithoutProvider(callData) {
+async function ethCallWithoutProvider (callData) {
 	const resp = await fetch(rpcUrl, {
 		method: 'POST',
 		headers: {
@@ -200,8 +200,8 @@ async function ethCallWithoutProvider(callData) {
 }
 
 export async function getFileMetaWithoutProvider (id) {
-	const packedId = ethers.utils.solidityPack(['uint256'], [id])
-	const callData = ethers.utils.hexConcat(['0xf4c714b4', packedId])
+	const args = ethers.utils.defaultAbiCoder.encode(['uint256'], [id])
+	const callData = ethers.utils.hexConcat(['0xf4c714b4', args])
 	const result = await ethCallWithoutProvider(callData)
 
 	return ethers.utils.defaultAbiCoder.decode(
